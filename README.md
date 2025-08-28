@@ -97,7 +97,39 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## 🐳 Docker Deployment
 
-### Quick Start with Docker
+### Prerequisites
+- **Docker Desktop** must be installed and running
+- **Windows**: Start Docker Desktop from Start Menu
+- **macOS/Linux**: Ensure Docker daemon is running
+
+### Quick Start with Docker (PowerShell - Windows)
+
+```powershell
+# Build the image (single line for PowerShell)
+docker build --build-arg NEXT_PUBLIC_SUPABASE_URL=your-supabase-url --build-arg NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key -t gg-todo:latest .
+
+# Run the container
+docker run -p 3000:3000 --name gg-todo-container gg-todo:latest
+```
+
+### Using the PowerShell Script (Recommended for Windows)
+
+```powershell
+# Make sure Docker Desktop is running first
+# Build the image automatically using .env.local
+.\docker-build.ps1 -Action build
+
+# Run the container
+.\docker-build.ps1 -Action run
+
+# View logs
+.\docker-build.ps1 -Action logs
+
+# Stop and clean up
+.\docker-build.ps1 -Action stop
+```
+
+### Quick Start with Docker (Bash - Linux/macOS)
 
 ```bash
 # Build the image
