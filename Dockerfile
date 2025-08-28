@@ -7,7 +7,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install all dependencies for Linux (skip copying node_modules from host)
-RUN npm install --omit=dev
+RUN npm ci --omit=dev --ignore-scripts && npm cache clean --force
+
 
 # Copy remaining source files
 COPY . .
