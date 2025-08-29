@@ -65,17 +65,25 @@ export default function LoginPage() {
     setError(null);
 
     try {
-      const { error } = await supabase.auth.signInWithOAuth({
+      const { data, error } = await supabase.auth.signInWithOAuth({
         provider: 'google',
         options: {
           redirectTo: `${window.location.origin}/auth/callback`,
+          queryParams: {
+            access_type: 'offline',
+            prompt: 'consent',
+          },
         },
       });
 
       if (error) {
+        console.log('OAuth error:', error);
         setError(error.message);
+      } else {
+        console.log('OAuth initiated successfully:', data);
       }
-    } catch {
+    } catch (err) {
+      console.log('OAuth exception:', err);
       setError('An unexpected error occurred');
     } finally {
       setIsLoading(false);

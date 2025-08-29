@@ -50,8 +50,9 @@ export async function middleware(request: NextRequest) {
     !session &&
     pathname !== '/login' &&
     pathname !== '/signup' &&
+    pathname !== '/callback' &&
     pathname !== '/auth/callback' &&
-    pathname !== '/auth/auth-code-error'
+    pathname !== '/auth-code-error'
   ) {
     return NextResponse.redirect(new URL('/login', request.url));
   }
