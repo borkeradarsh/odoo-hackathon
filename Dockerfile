@@ -1,30 +1,55 @@
-# Use Debian-based image for faster SWC installation
-FROM node:20-bullseye-slim AS builder
+# Dockerfile
+
+# --- Stage 1: Build the application ---
+# Use a specific Node.js version for consistency and security
+FROM node:20-alpine AS builder
+
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy only package files first for caching
+# Install dependencies first to leverage Docker layer caching
 COPY package*.json ./
+RUN npm install
 
-# Use npm ci for clean, faster, reproducible installs
-RUN npm ci --ignore-scripts
-
-# Copy full source and env file
+# Copy all source files
 COPY . .
-COPY .env.local .env
 
-# Build the Next.js app
+ARG NEXT_PUBLIC_SUPABASE_URL
+ARG NEXT_PUBLIC_SUPABASE_ANON_KEY
+ENV NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
+ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+
+
+# Build the application with the standalone output setting
+# This creates a minimal server in the .next/standalone folder
 RUN npm run build
 
-# Runner stage
-FROM node:20-bullseye-slim AS runner
+# --- Stage 2: Create the lean production image ---
+# Use the same base image for a smaller final size
+FROM node:20-alpine AS runner
+
 WORKDIR /app
 
-COPY --from=builder /app/.next ./.next
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/.env ./.env
+# Create a non-root user for better security
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
 
-RUN npm ci --omit=dev --ignore-scripts
+# Copy only the necessary standalone output from the builder stage
+# This folder contains the server.js file and all necessary node_modules
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 
+# Copy the static assets (CSS, fonts) and the public folder (images)
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/public ./public
+
+# Switch to the non-root user
+USER nextjs
+
+# Expose the port the app runs on
 EXPOSE 3000
-CMD ["npm", "start"]
+
+# Set the port environment variable for the Next.js server
+ENV PORT=3000
+
+# Start the application using the standalone server.js file
+CMD ["node", "server.js"]
