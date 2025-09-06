@@ -23,56 +23,43 @@ export default async function DashboardPage() {
     .eq('id', user.id)
     .single();
 
-  // Fetch recent tasks from projects the user is a member of
-  // For now, we'll handle the transition gracefully if tables don't exist yet
-  let recentTasks = [];
+  // Fetch recent tasks - simplified for debugging
+  let recentTasks: Array<{ id: string; title: string; status: string }> = [];
   let isTasksTableMissing = false;
   
   try {
     console.log('Attempting to fetch tasks for user:', user.id);
     
-    // Query using the correct column based on the actual schema
-    const { data, error } = await supabase
+    // Replace your existing tasks fetch with this simple one for debugging:
+    const { data: tasksData, error: tasksError } = await supabase
       .from('tasks')
-      .select('*')
-      .eq('user_id', user.id) // This matches the actual schema
-      .order('updated_at', { ascending: false })
+      .select('id, title, status') // Select only a few simple columns
       .limit(10);
     
-    if (error) {
+    if (tasksError) {
       console.error('Tasks query error details:', {
-        error,
-        message: error.message,
-        details: error.details,
-        hint: error.hint,
-        code: error.code,
+        error: tasksError,
+        message: tasksError.message,
+        details: tasksError.details,
+        hint: tasksError.hint,
+        code: tasksError.code,
         userId: user.id
       });
-      
-      // Try a simpler query to test RLS
-      console.log('Trying simpler query...');
-      const { data: simpleData, error: simpleError } = await supabase
-        .from('tasks')
-        .select('id, title, user_id, project_id')
-        .limit(5);
-        
-      console.log('Simple query result:', { simpleData, simpleError });
     }
     
     console.log('Tasks query result:', {
-      dataCount: data?.length || 0,
-      hasError: !!error,
+      dataCount: tasksData?.length || 0,
+      hasError: !!tasksError,
       userId: user.id,
-      sampleData: data?.slice(0, 2) // Show first 2 records for debugging
+      sampleData: tasksData?.slice(0, 2) // Show first 2 records for debugging
     });
     
-    // Filter personal tasks (project_id is null) on the client side for now
-    recentTasks = data?.filter(task => task.project_id === null) || [];
+    recentTasks = tasksData || [];
     
     // Check if the error is due to missing table
-    if (error && typeof error === 'object' && 'code' in error) {
+    if (tasksError && typeof tasksError === 'object' && 'code' in tasksError) {
       // PGRST116 = table doesn't exist
-      if (error.code === 'PGRST116') {
+      if (tasksError.code === 'PGRST116') {
         isTasksTableMissing = true;
       }
     }
