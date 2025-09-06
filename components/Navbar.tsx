@@ -64,11 +64,11 @@ export default function Navbar({
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center">
           <Image
-            src="/assets/greedygame.svg"
-            alt="GreedyGame"
+            src="/assets/synergysphere.svg"
+            alt="SynergySphere"
             width={120}
             height={40}
-            className="h-5 w-auto"
+            className="h-10 w-auto"
             unoptimized
           />
           <div className="border-b border-gray-200 p-4">

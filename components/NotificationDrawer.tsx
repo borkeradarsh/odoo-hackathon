@@ -86,7 +86,7 @@ export default function NotificationDrawer({
                 <h3 className="text-md mb-4 pl-3 font-semibold">Upcoming</h3>
                 {upcoming.length === 0 ? (
                   <p className="px-4 text-sm text-gray-500">
-                    No upcoming todos
+                    No upcoming tasks
                   </p>
                 ) : (
                   <div className="space-y-3 px-4">
@@ -127,7 +127,7 @@ export default function NotificationDrawer({
                 <h3 className="text-md mb-4 pl-3 font-semibold">Completed</h3>
                 {completed.length === 0 ? (
                   <p className="px-4 text-sm text-gray-500">
-                    No recently completed todos
+                    No recently completed tasks
                   </p>
                 ) : (
                   <div className="space-y-3 px-4">

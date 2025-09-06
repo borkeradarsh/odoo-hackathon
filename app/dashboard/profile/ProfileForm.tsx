@@ -65,14 +65,14 @@ export default function ProfileForm({ profile, userEmail }: ProfileFormProps) {
 
         // Fetch all todos count
         const { count: allCount } = await supabase
-          .from('todos')
+          .from('tasks')
           .select('*', { count: 'exact', head: true })
           .eq('user_id', user.id);
 
         // Fetch upcoming todos count (not completed and due in future)
         const now = new Date().toISOString();
         const { count: upcomingCount } = await supabase
-          .from('todos')
+          .from('tasks')
           .select('*', { count: 'exact', head: true })
           .eq('user_id', user.id)
           .eq('completed', false)
@@ -80,7 +80,7 @@ export default function ProfileForm({ profile, userEmail }: ProfileFormProps) {
 
         // Fetch completed todos count
         const { count: completedCount } = await supabase
-          .from('todos')
+          .from('tasks')
           .select('*', { count: 'exact', head: true })
           .eq('user_id', user.id)
           .eq('completed', true);

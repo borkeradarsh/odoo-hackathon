@@ -1,4 +1,4 @@
-# 🚀 GreedyGame Todo Application
+# 🚀 SynergySphere Todo Application
 
 A modern, full-stack todo application built with **Next.js 15**, **Supabase**, and **Framer Motion**. This project demonstrates clean architecture, smooth animations, and production-ready deployment with Docker containerization.
 
@@ -8,7 +8,7 @@ A modern, full-stack todo application built with **Next.js 15**, **Supabase**, a
 [![Docker](https://img.shields.io/badge/Docker-Ready-blue)](https://www.docker.com/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4.17-cyan)](https://tailwindcss.com/)
 
-![Todo App Demo](https://via.placeholder.com/800x400/1f2937/ffffff?text=GreedyGame+Todo+App)
+![Todo App Demo](https://via.placeholder.com/800x400/1f2937/ffffff?text=SynergySphere+Todo+App)
 
 ## ✨ Features
 
@@ -64,8 +64,8 @@ A modern, full-stack todo application built with **Next.js 15**, **Supabase**, a
 ### 1. Clone & Install
 
 ```bash
-git clone https://github.com/borkeradarsh/greedygame-todo.git
-cd greedygame-todo
+git clone https://github.com/borkeradarsh/synergysphere-todo.git
+cd synergysphere-todo
 npm install
 ```
 
@@ -303,7 +303,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 🙏 Acknowledgments
 
-- **GreedyGame** - For the opportunity to build this application
+- **SynergySphere** - For the opportunity to build this application
 - **Vercel** - For the excellent Next.js framework
 - **Supabase** - For the powerful backend platform
 - **Tailwind CSS** - For the utility-first CSS framework
@@ -318,5 +318,5 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 ---
 
 <div align="center">
-  <strong>Built with ❤️ for GreedyGame</strong>
+  <strong>Built with ❤️ for SynergySphere</strong>
 </div>

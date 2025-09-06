@@ -2,7 +2,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Calendar, LayoutDashboard, ListTodo, Users } from 'lucide-react';
+import { Calendar, FolderOpen, ListTodo, Users } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -22,21 +22,21 @@ interface SidebarProps {
 export default function Sidebar({ isCollapsed, profile }: SidebarProps) {
   const pathname = usePathname();
 
-  const baseMenuItems = [
+    const baseMenuItems = [
     {
-      icon: LayoutDashboard,
-      label: 'Dashboard',
+      icon: ListTodo,
+      label: 'My Tasks',
       href: '/dashboard',
+    },
+    {
+      icon: FolderOpen,
+      label: 'Team Projects',
+      href: '/projects',
     },
     {
       icon: Calendar,
       label: 'Calendar',
       href: '/calendar',
-    },
-    {
-      icon: ListTodo,
-      label: 'To-do List',
-      href: '/todos',
     },
   ];
 

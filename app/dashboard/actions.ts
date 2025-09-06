@@ -48,7 +48,7 @@ export async function addTodo(formData: FormData) {
       scheduled_at: validation.data.scheduled_at.toISOString(),
     };
 
-    const { error } = await supabase.from('todos').insert(todoData);
+    const { error } = await supabase.from('tasks').insert(todoData);
 
     if (error) {
       return { error: { database: 'Could not create todo.' } };
@@ -84,14 +84,14 @@ export async function updateTodo(formData: FormData) {
   }
 
   const { error } = await supabase
-    .from('todos')
+    .from('tasks')
     .update({
       title: validation.data.title,
       description: validation.data.description,
       scheduled_at: validation.data.scheduled_at.toISOString(),
     })
     .eq('id', todoId)
-    .eq('user_id', user.id); // Ensure user can only update their own todo
+    .eq('user_id', user.id); // Ensure user can only update their own task
 
   if (error) return { error: { database: 'Could not update todo.' } };
 
@@ -108,12 +108,12 @@ export async function deleteTodo(todoId: string) {
   if (!user) throw new Error('Authentication required');
 
   const { error } = await supabase
-    .from('todos')
+    .from('tasks')
     .delete()
     .eq('id', todoId)
-    .eq('user_id', user.id); // Ensure user can only delete their own todo
+    .eq('user_id', user.id); // Ensure user can only delete their own task
 
-  if (error) return { error: { database: 'Could not delete todo.' } };
+  if (error) return { error: { database: 'Could not delete task.' } };
 
   revalidatePath('/dashboard');
   return { success: true };
@@ -133,9 +133,9 @@ export async function getNotifications() {
   const now = new Date();
   const fourHoursFromNow = new Date(now.getTime() + 4 * 60 * 60 * 1000);
 
-  // Fetch upcoming todos due in the next 4 hours
+  // Fetch upcoming tasks due in the next 4 hours
   const { data: upcoming, error: upcomingError } = await supabase
-    .from('todos')
+    .from('tasks')
     .select('*')
     .eq('user_id', user.id)
     .eq('completed', false)
@@ -144,13 +144,13 @@ export async function getNotifications() {
     .order('scheduled_at', { ascending: true });
 
   if (upcomingError) {
-    console.error('Error fetching upcoming todos:', upcomingError);
-    throw new Error('Could not fetch upcoming todos.');
+    console.error('Error fetching upcoming tasks:', upcomingError);
+    throw new Error('Could not fetch upcoming tasks.');
   }
 
-  // Fetch the 5 most recently completed todos
+  // Fetch the 5 most recently completed tasks
   const { data: completed, error: completedError } = await supabase
-    .from('todos')
+    .from('tasks')
     .select('*')
     .eq('user_id', user.id)
     .eq('completed', true)
@@ -158,8 +158,8 @@ export async function getNotifications() {
     .limit(5);
 
   if (completedError) {
-    console.error('Error fetching completed todos:', completedError);
-    throw new Error('Could not fetch completed todos.');
+    console.error('Error fetching completed tasks:', completedError);
+    throw new Error('Could not fetch completed tasks.');
   }
 
   return { upcoming, completed };
@@ -174,13 +174,13 @@ export async function toggleTodoStatus(todoId: string, currentState: boolean) {
   if (!user) throw new Error('Authentication required');
 
   const { error } = await supabase
-    .from('todos')
+    .from('tasks')
     .update({ completed: !currentState })
     .eq('id', todoId)
     .eq('user_id', user.id); // Security check
 
   if (error) {
-    return { error: { database: 'Could not update todo status.' } };
+    return { error: { database: 'Could not update task status.' } };
   }
 
   revalidatePath('/dashboard'); // Refresh the main dashboard

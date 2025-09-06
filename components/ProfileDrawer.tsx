@@ -85,24 +85,24 @@ export default function ProfileDrawer({
       if (!isSheetOpen) return;
 
       try {
-        // Fetch all todos count
+                // Fetch all tasks count
         const { count: allCount } = await supabase
-          .from('todos')
+          .from('tasks')
           .select('*', { count: 'exact', head: true })
           .eq('user_id', user.id);
 
-        // Fetch upcoming todos count (not completed and due in future)
+        // Fetch upcoming tasks count (not completed and due in future)
         const now = new Date().toISOString();
         const { count: upcomingCount } = await supabase
-          .from('todos')
+          .from('tasks')
           .select('*', { count: 'exact', head: true })
           .eq('user_id', user.id)
           .eq('completed', false)
           .gte('scheduled_at', now);
 
-        // Fetch completed todos count
+        // Fetch completed tasks count
         const { count: completedCount } = await supabase
-          .from('todos')
+          .from('tasks')
           .select('*', { count: 'exact', head: true })
           .eq('user_id', user.id)
           .eq('completed', true);
@@ -299,7 +299,7 @@ export default function ProfileDrawer({
           <div className="space-y-4">
             <div className="grid grid-cols-3 gap-4 text-center">
               <div>
-                <p className="text-sm text-gray-500">All Todos</p>
+                <p className="text-sm text-gray-500">All Tasks</p>
                 <p className="text-2xl font-bold text-gray-900">{todos.all}</p>
               </div>
               <div>

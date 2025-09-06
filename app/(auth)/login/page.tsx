@@ -2,7 +2,7 @@
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { motion } from 'framer-motion';
-import { EyeIcon, EyeOffIcon } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -109,15 +109,15 @@ export default function LoginPage() {
           {/* Logo */}
           <div className="text-center">
             <Image
-              src="/assets/greedygame.svg"
-              alt="GreedyGame"
+              src="/assets/synergysphere.svg"
+              alt="SynergySphere"
               width={120}
               height={40}
               className="mx-auto mb-8"
               unoptimized
             />
             <h1 className="mb-2 text-2xl font-semibold text-gray-900">
-              Welcome to GGTodo
+              Welcome to synergysphere
             </h1>
             <p className="text-sm text-gray-600">
               To get started, please sign in
@@ -208,9 +208,9 @@ export default function LoginPage() {
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
-                    <EyeOffIcon className="h-4 w-4 text-gray-400" />
+                    <EyeOff className="h-4 w-4 text-gray-400" />
                   ) : (
-                    <EyeIcon className="h-4 w-4 text-gray-400" />
+                    <Eye className="h-4 w-4 text-gray-400" />
                   )}
                 </button>
               </div>

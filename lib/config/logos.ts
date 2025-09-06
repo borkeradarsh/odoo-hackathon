@@ -3,8 +3,8 @@
 export const logoConfig = {
   // Main brand logo
   brand: {
-    src: '/greedygame.svg',
-    alt: 'GreedyGame',
+    src: '/synergysphere.svg',
+    alt: 'SynergySphere',
     width: 120,
     height: 40,
   },
@@ -24,9 +24,9 @@ export const logoConfig = {
 
   // App metadata
   app: {
-    name: 'GGTodo',
+    name: 'SynergySphere',
     tagline: {
-      login: 'Welcome to GGTodo',
+      login: 'Welcome to SynergySphere',
       signup: "You're one click away from less busywork",
     },
     subtitle: {

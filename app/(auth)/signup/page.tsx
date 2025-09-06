@@ -119,8 +119,8 @@ export default function SignupPage() {
           {/* Logo */}
           <div className="text-center">
             <Image
-              src="/assets/greedygame.svg"
-              alt="GreedyGame"
+              src="/assets/synergysphere.svg"
+              alt="SynergySphere"
               width={120}
               height={40}
               className="mx-auto mb-8"

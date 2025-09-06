@@ -144,7 +144,7 @@ export default function DashboardClient({
         >
           <Card className="shadow-soft transition-shadow hover:shadow-lg">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">All Todos</CardTitle>
+              <CardTitle className="text-sm font-medium">All Tasks</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">{totalTodos}</div>
@@ -181,12 +181,12 @@ export default function DashboardClient({
         </motion.div>
       </div>
 
-      {/* Todos Table */}
+      {/* Tasks Table */}
       <Card className="shadow-soft transition-shadow hover:shadow-lg">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle>All Todos</CardTitle>
+              <CardTitle>All Tasks</CardTitle>
               <p className="mt-1 text-sm text-gray-500">
                 Last updated:{' '}
                 {new Date().toLocaleDateString('en-US', {
@@ -224,11 +224,11 @@ export default function DashboardClient({
         <CardContent>
           {initialTodos.length === 0 ? (
             <div className="py-12 text-center">
-              <p className="mb-4 text-gray-500">No todos found</p>
+              <p className="mb-4 text-gray-500">No tasks found</p>
               <motion.div whileTap={{ scale: 0.95 }}>
                 <Button onClick={handleAddTodo}>
                   <Plus className="mr-2 h-4 w-4" />
-                  Create your first todo
+                  Create your first task
                 </Button>
               </motion.div>
             </div>
@@ -242,7 +242,7 @@ export default function DashboardClient({
                 <TableHeader>
                   <TableRow className="rounded-2xl bg-gray-200 hover:bg-gray-200">
                     <TableHead className="w-12"></TableHead>
-                    <TableHead>Todo</TableHead>
+                    <TableHead>Task</TableHead>
                     <TableHead className="w-32">Due Date</TableHead>
                     <TableHead className="w-24">Status</TableHead>
                     <TableHead className="w-24 text-center">Actions</TableHead>

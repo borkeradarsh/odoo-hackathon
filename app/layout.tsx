@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'greedygame-todo',
+  title: 'synergysphere-todo',
   description: 'A todo app for managing tasks',
 };
 
